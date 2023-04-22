@@ -1,4 +1,4 @@
-package me.woo.wmarket.entity;
+package me.woo.wmarket.chatting.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class User {
+public class ChatMessage {
   /**
    * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
    */
@@ -18,13 +18,16 @@ public class User {
   private Long id;
 
   @Column
-  private String email;
+  private Long productId;
 
   @Column
-  private String password;
+  private String sender;
 
   @Column
-  private String nickname;
+  private String receiver;
+
+  @Column
+  private String message;
 
 
   /**

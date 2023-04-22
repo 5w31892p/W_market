@@ -1,4 +1,4 @@
-package me.woo.wmarket.entity;
+package me.woo.wmarket.product.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,10 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
+import me.woo.wmarket.user.entity.User;
 
 @Entity
 @NoArgsConstructor
-public class ChatRoom {
+public class Product {
   /**
    * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
    */
@@ -20,29 +21,33 @@ public class ChatRoom {
   private Long id;
 
   @Column
-  private Long sellerId;
+  private String title;
 
   @Column
-  private Long buyerId;
+  private String content;
 
+  @Column
+  private String seller;
 
   /**
    * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
    */
 
+
   /**
    * 연관관계 - Foreign Key 값을 따로 컬럼으로 정의하지 않고 연관 관계로 정의합니다.
    */
   @ManyToOne
-  @JoinColumn(name = "product_id")
-  private Product product;
+  @JoinColumn(name = "user_id")
+  private User user;
+
 
   /**
    * 연관관계 편의 메소드 - 반대쪽에는 연관관계 편의 메소드가 없도록 주의합니다.
    */
 
+
   /**
    * 서비스 메소드 - 외부에서 엔티티를 수정할 메소드를 정의합니다. (단일 책임을 가지도록 주의합니다.)
    */
-
 }

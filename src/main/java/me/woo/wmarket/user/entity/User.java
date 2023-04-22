@@ -1,15 +1,18 @@
-package me.woo.wmarket.entity;
+package me.woo.wmarket.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "users")
+@Getter
 @NoArgsConstructor
-public class ChatMessage {
+public class User {
   /**
    * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
    */
@@ -17,24 +20,25 @@ public class ChatMessage {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private Long productId;
+  @Column(nullable = false, unique = true)
+  private String email;
 
-  @Column
-  private String sender;
+  @Column(nullable = false)
+  private String password;
 
-  @Column
-  private String receiver;
-
-  @Column
-  private String message;
+  @Column(nullable = false, unique = true)
+  private String nickname;
 
 
   /**
    * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
    */
-
-
+  @Builder
+  public User(String email, String password, String nickname) {
+    this.email = email;
+    this.password = password;
+    this.nickname = nickname;
+  }
   /**
    * 연관관계 - Foreign Key 값을 따로 컬럼으로 정의하지 않고 연관 관계로 정의합니다.
    */
