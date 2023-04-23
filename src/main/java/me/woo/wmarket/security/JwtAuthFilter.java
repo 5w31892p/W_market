@@ -12,9 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import me.woo.wmarket.jwtUtil.JwtUtil;
 import me.woo.wmarket.security.dto.SecurityExceptionDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 
@@ -43,9 +45,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, response);
   }
 
+  public Authentication createAuthentication(String username) {
+
+    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+  }
+
   public void setAuthentication(String username) {
     SecurityContext context = SecurityContextHolder.createEmptyContext();
-    Authentication authentication = jwtUtil.createAuthentication(username);
+    Authentication authentication = createAuthentication(username);
     context.setAuthentication(authentication);
 
     SecurityContextHolder.setContext(context);

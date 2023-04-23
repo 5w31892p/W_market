@@ -16,11 +16,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    User user = userRepository.findByEmail(email)
-        .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 사용자입니다."));
+    User user = this.userRepository.findByUsername(username).orElseThrow(
+        () -> new IllegalArgumentException("등록되지 않은 사용자입니다.")
+        );
+    return new UserDetailsImpl(user, user.getUsername());
 
-    return new UserDetailsImpl(user);
   }
 }

@@ -1,6 +1,7 @@
 package me.woo.wmarket.user.service;
 
 import jakarta.servlet.http.HttpServletResponse;
+import me.woo.wmarket.user.dto.NicknameRequest;
 import me.woo.wmarket.user.dto.SigninRequest;
 import me.woo.wmarket.user.dto.SignupRequest;
 
@@ -10,6 +11,8 @@ public interface UserService {
 
   void signin(SigninRequest request, HttpServletResponse response);
 
-  void deleteUser(Long userId, String email);
+  void updateNickname(NicknameRequest request, String username);
+
+  void deleteUser(Long userId, String username);
 
 }

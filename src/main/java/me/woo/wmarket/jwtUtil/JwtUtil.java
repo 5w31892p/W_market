@@ -14,11 +14,8 @@ import java.util.Base64;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.woo.wmarket.security.UserDetailsServiceImpl;
+import me.woo.wmarket.user.entity.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -26,8 +23,6 @@ import org.springframework.util.StringUtils;
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
-
-  private final UserDetailsServiceImpl userDetailsService;
   public static final String AUTHORIZATION_HEADER = "Authorization";
   public static final String AUTHORIZATION_KEY = "auth";
   private static final String BEARER_PREFIX = "Bearer ";
@@ -54,13 +49,13 @@ public class JwtUtil {
   }
 
   // 토큰 생성
-  public String createToken(String nickname, String email) {
+  public String createToken(String username, UserRoleEnum role) {
     Date date = new Date();
 
     return BEARER_PREFIX +
         Jwts.builder()
-            .setSubject(email)
-            .claim(AUTHORIZATION_KEY, nickname)
+            .setSubject(username)
+            .claim(AUTHORIZATION_KEY, role)
             .setExpiration(new Date(date.getTime() + TOKEN_TIME))
             .setIssuedAt(date)
             .signWith(key, signatureAlgorithm)
@@ -87,11 +82,5 @@ public class JwtUtil {
   // 토큰에서 사용자 정보 가져오기
   public Claims getUserInfoFromToken(String token) {
     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-  }
-
-  public Authentication createAuthentication(String email) {
-
-    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
   }
 }

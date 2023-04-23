@@ -1,14 +1,15 @@
 package me.woo.wmarket.user.dto;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Getter
+@NoArgsConstructor
 public class SignupRequest {
 
-  private String email;
+  private String username;
   private String password;
   private String nickname;
+  private boolean admin = false;
 
 }
