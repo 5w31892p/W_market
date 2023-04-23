@@ -1,10 +1,10 @@
 package me.woo.wmarket.user.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@Builder
 public class SigninRequest {
   private String username;
   private String password;

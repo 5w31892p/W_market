@@ -42,7 +42,7 @@ public class UserController {
 
   // 닉네임 수정
   @PatchMapping("/update")
-  public ResponseEntity<String>  updateNickname(@RequestBody
+  public ResponseEntity<String>  updateNickname(@Validated @RequestBody
       NicknameRequest request, @AuthenticationPrincipal UserDetailsImpl userDetails) {
     userService.updateNickname(request, userDetails.getUsername());
     return new ResponseEntity<>("닉네임 수정 완료", HttpStatus.OK);
