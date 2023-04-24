@@ -1,5 +1,6 @@
 package me.woo.wmarket.user.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,10 +8,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.woo.wmarket.chatting.entity.ChatRoom;
+import me.woo.wmarket.product.entity.Product;
 
 @Entity(name = "users")
 @Getter
@@ -51,7 +57,11 @@ public class User {
   /**
    * 연관관계 - Foreign Key 값을 따로 컬럼으로 정의하지 않고 연관 관계로 정의합니다.
    */
+  @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Product> product = new LinkedHashSet<>();
 
+  @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<ChatRoom> chatRooms = new LinkedHashSet<>();
 
   /**
    * 연관관계 편의 메소드 - 반대쪽에는 연관관계 편의 메소드가 없도록 주의합니다.
