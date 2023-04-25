@@ -5,7 +5,10 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.woo.wmarket.product.dto.ProductRequest;
 import me.woo.wmarket.product.dto.ProductResponse;
+import me.woo.wmarket.product.dto.ProductUpdateRequest;
+import me.woo.wmarket.product.dto.StatusUpdateRequest;
 import me.woo.wmarket.product.entity.Product;
+import me.woo.wmarket.product.entity.Product.TransactionStatus;
 import me.woo.wmarket.product.repository.ProductRepository;
 import me.woo.wmarket.user.entity.User;
 import me.woo.wmarket.user.repository.UserRepository;
@@ -41,7 +44,7 @@ public class ProductServiceImpl implements ProductService{
   }
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
   public ProductResponse getProduct(Long productId) {
     Product product = productRepository.findById(productId).orElseThrow(
         () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 상품입니다.")
@@ -50,7 +53,7 @@ public class ProductServiceImpl implements ProductService{
   }
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
   public List<ProductResponse> showProducts() {
     List<Product> list = productRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     List<ProductResponse> productList = new ArrayList<>();
@@ -59,17 +62,42 @@ public class ProductServiceImpl implements ProductService{
   }
 
   @Override
-  public ProductResponse updateProduct(Long productId) {
-    return null;
+  public ProductResponse updateProduct(Long productId, ProductUpdateRequest updateRequest, Long userId) {
+    Product product = productRepository.findById(productId).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 상품입니다.")
+    );
+    if (!product.checkSeller(userId)) {
+      throw new IllegalArgumentException("권한이 없습니다.");
+    }
+    product.updateProduct(updateRequest);
+    this.productRepository.save(product);
+
+    return new ProductResponse(product);
   }
 
   @Override
-  public ProductResponse updateStatus(Long productId) {
-    return null;
+  public ProductResponse updateStatus(Long productId, StatusUpdateRequest updateRequest, Long userId) {
+    Product product = productRepository.findById(productId).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 상품입니다.")
+    );
+    if (!product.checkSeller(userId)) {
+      throw new IllegalArgumentException("권한이 없습니다.");
+    }
+    TransactionStatus status = updateRequest.getStatus();
+
+    product.updateStatus(status);
+    Product updatedProduct = this.productRepository.save(product);
+    return new ProductResponse(updatedProduct);
   }
 
   @Override
-  public void deleteProduct(Long productId) {
-
+  public void deleteProduct(Long productId, Long userId) {
+    Product product = productRepository.findById(productId).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 상품입니다.")
+    );
+    if (!product.checkSeller(userId)) {
+      throw new IllegalArgumentException("권한이 없습니다.");
+    }
+    userRepository.deleteById(productId);
   }
 }

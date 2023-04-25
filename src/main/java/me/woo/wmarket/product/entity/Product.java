@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.woo.wmarket.chatting.entity.ChatRoom;
+import me.woo.wmarket.product.dto.ProductUpdateRequest;
 import me.woo.wmarket.user.entity.User;
 
 @Entity
@@ -99,4 +100,19 @@ public class Product {
   /**
    * 서비스 메소드 - 외부에서 엔티티를 수정할 메소드를 정의합니다. (단일 책임을 가지도록 주의합니다.)
    */
+  public boolean checkSeller(Long userId) {
+    return this.seller.getId().equals(userId);
+  }
+
+  public void updateProduct(ProductUpdateRequest updateRequest) {
+    this.title = updateRequest.getTitle();
+    this.content = updateRequest.getContent();
+    this.image = updateRequest.getImage();
+    this.price = updateRequest.getPrice();
+    this.category = updateRequest.getCategory();
+  }
+
+  public void updateStatus(TransactionStatus status) {
+    this.status = status;
+  }
 }
