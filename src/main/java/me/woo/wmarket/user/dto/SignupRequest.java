@@ -17,7 +17,7 @@ public class SignupRequest {
   @NotEmpty(message = "비밀번호를 입력해주세요.")
   private String password;
 
-  @Pattern(regexp = "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{3,8}$", message = "3자 이상으로 적어주세요.")
+  @Pattern(regexp = "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{3,15}$", message = "3자 이상으로 적어주세요.")
   @NotEmpty(message = "닉네임을 입력해주세요.")
   private String nickname;
   private boolean admin = false;

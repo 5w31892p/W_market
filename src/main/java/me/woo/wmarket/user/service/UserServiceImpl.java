@@ -50,11 +50,11 @@ public class UserServiceImpl implements UserService{
     String password = request.getPassword();
 
     User user = userRepository.findByUsername(username).orElseThrow(
-        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "회원정보가 일치하지 않습니다.")
+        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "회원정보가 올바르지 않습니다.")
     );
 
     if (!passwordEncoder.matches(password, user.getPassword())) {
-      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "회원정보가 일치하지 않습니다.");
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "회원정보가 올바르지 않습니다.");
     }
 
     String token = jwtUtil.createToken(user.getUsername(), user.getRole());

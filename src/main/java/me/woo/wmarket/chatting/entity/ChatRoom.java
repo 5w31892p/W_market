@@ -1,5 +1,6 @@
 package me.woo.wmarket.chatting.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,10 +8,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.woo.wmarket.product.entity.Product;
+import me.woo.wmarket.user.entity.User;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class ChatRoom {
   /**
@@ -20,11 +27,8 @@ public class ChatRoom {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
-  private Long sellerId;
-
-  @Column
-  private Long buyerId;
+  @Column(nullable = false, name = "seller_id")
+  private Long seller;
 
 
   /**
@@ -37,6 +41,14 @@ public class ChatRoom {
   @ManyToOne
   @JoinColumn(name = "product_id")
   private Product product;
+
+  @ManyToOne
+  @JoinColumn(name = "buyer_id")
+  private User buyer;
+
+  @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<ChatMessage> messages = new LinkedHashSet<>();
+
 
   /**
    * 연관관계 편의 메소드 - 반대쪽에는 연관관계 편의 메소드가 없도록 주의합니다.
