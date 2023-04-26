@@ -115,4 +115,8 @@ public class Product {
   public void updateStatus(TransactionStatus status) {
     this.status = status;
   }
+
+  public Set<ChatRoom> getChatRooms() {
+    return this.chatRoom;
+  }
 }

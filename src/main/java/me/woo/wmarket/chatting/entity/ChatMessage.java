@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,19 +35,29 @@ public class ChatMessage {
   @Column
   private String message;
 
+  @Column
+  private LocalDateTime sendTime;
+
 
   /**
    * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
    */
 
-  @ManyToOne
-  @JoinColumn(name = "chat_room_id")
-  private ChatRoom chatRoom;
-
+  @Builder
+  public ChatMessage(Long productId, String sender, String receiver, String message, LocalDateTime sendTime) {
+    this.productId = productId;
+    this.sender = sender;
+    this.receiver = receiver;
+    this.message = message;
+    this.sendTime = sendTime;
+  }
 
   /**
    * 연관관계 - Foreign Key 값을 따로 컬럼으로 정의하지 않고 연관 관계로 정의합니다.
    */
+  @ManyToOne
+  @JoinColumn(name = "chat_room_id")
+  private ChatRoom chatRoom;
 
 
   /**
