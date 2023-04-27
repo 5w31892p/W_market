@@ -44,12 +44,11 @@ public class ChatMessage {
    */
 
   @Builder
-  public ChatMessage(Long productId, String sender, String receiver, String message, LocalDateTime sendTime) {
-    this.productId = productId;
+  public ChatMessage(String sender, String receiver, String message, ChatRoom chatRoom) {
     this.sender = sender;
     this.receiver = receiver;
     this.message = message;
-    this.sendTime = sendTime;
+    this.chatRoom = chatRoom;
   }
 
   /**

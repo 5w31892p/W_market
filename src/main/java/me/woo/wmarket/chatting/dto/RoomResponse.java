@@ -20,7 +20,7 @@ public class RoomResponse {
   private String productImg;
   private Long productPrice;
   private String receiver;
-  private Set<MessageRequest> message;
+  private Set<MessageDetails> message;
 
   public RoomResponse(ChatRoom chatRoom) {
     this.roomId = chatRoom.getId();
@@ -32,8 +32,8 @@ public class RoomResponse {
         ? chatRoom.getProduct().getSeller().getNickname()
         : chatRoom.getBuyer().getNickname();
     this.message = chatRoom.getMessages().stream()
-        .map(MessageRequest::new)
-        .sorted(Comparator.comparing(MessageRequest::getSendTime))
+        .map(MessageDetails::new)
+        .sorted(Comparator.comparing(MessageDetails::getSendTime))
         .collect(Collectors.toCollection(LinkedHashSet::new));
   }
 

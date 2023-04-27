@@ -9,14 +9,14 @@ import me.woo.wmarket.chatting.entity.ChatMessage;
 @Getter
 @Builder
 @AllArgsConstructor
-public class MessageRequest {
+public class MessageDetails {
 
   private String sender;
   private String receiver;
   private String message;
   private LocalDateTime sendTime;
 
-  public MessageRequest(ChatMessage chatMessage) {
+  public MessageDetails(ChatMessage chatMessage) {
     this.sender = chatMessage.getSender();
     this.receiver = chatMessage.getReceiver();
     this.message = chatMessage.getMessage();
