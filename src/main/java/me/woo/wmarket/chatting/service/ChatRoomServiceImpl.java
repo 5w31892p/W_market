@@ -62,7 +62,11 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     User user = userRepository.findByUsername(username).orElseThrow(
         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원정보가 올바르지 않습니다.")
     );
-    return new RoomResponse(chatRoom);
+
+    if (!chatRoom.checkChatroomUser(user.getId())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "본인이 속한 채팅만 볼 수 있습니다.");
+    }
+    return new RoomResponse(chatRoom, user);
   }
 
   @Override
@@ -84,10 +88,10 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         () -> new IllegalArgumentException("존재하지 않는 채팅방입니다.")
     );
 
-    if (user.checkAuthorization(user)) {
-      chatRoomRepository.deleteById(chatRoom.getId());
-      return;
+
+    if (!chatRoom.checkChatroomUser(user.getId()) || chatRoom.getSeller().equals(user.getId())) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "본인이 속한 채팅만 삭제할 수 있습니다.");
     }
-    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "본인이 속한 채팅만 삭제할 수 있습니다.");
+    chatRoomRepository.deleteById(chatRoom.getId());
   }
 }

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import me.woo.wmarket.chatting.entity.ChatRoom;
+import me.woo.wmarket.user.entity.User;
 
 @Getter
 @Builder
@@ -22,19 +23,23 @@ public class RoomResponse {
   private String receiver;
   private Set<MessageDetails> message;
 
-  public RoomResponse(ChatRoom chatRoom) {
+  public RoomResponse(ChatRoom chatRoom, User user) {
     this.roomId = chatRoom.getId();
     this.productId = chatRoom.getProduct().getId();
     this.productTitle = chatRoom.getProduct().getTitle();
     this.productImg = chatRoom.getProduct().getImage();
     this.productPrice = chatRoom.getProduct().getPrice();
-    this.receiver = chatRoom.getProduct().getSeller().getId().equals(chatRoom.getSeller())
-        ? chatRoom.getProduct().getSeller().getNickname()
-        : chatRoom.getBuyer().getNickname();
+    if (chatRoom.getProduct().getSeller().getId().equals(user.getId())) {
+      // 판매자인 경우
+      this.receiver = chatRoom.getBuyer().getNickname();
+    } else {
+      // 구매자인 경우
+      this.receiver = chatRoom.getProduct().getSeller().getNickname();
+    }
+
     this.message = chatRoom.getMessages().stream()
         .map(MessageDetails::new)
         .sorted(Comparator.comparing(MessageDetails::getSendTime))
         .collect(Collectors.toCollection(LinkedHashSet::new));
   }
-
 }
