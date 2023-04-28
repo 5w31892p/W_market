@@ -204,7 +204,7 @@ class ProductServiceImplTest {
 
 
     given(productRepository.findById(product.getId())).willReturn(Optional.of(product));
-    given(Optional.of(product).get().checkSeller(user.getId())).willReturn(true);
+    given(product.checkSeller(user.getId())).willReturn(true);
 
     // when
     productService.deleteProduct(product.getId(), user.getId());

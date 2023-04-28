@@ -70,8 +70,9 @@ public class Product {
    * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
    */
   @Builder
-  public Product(String title, String content, String image, Long price, Category category,
+  public Product(Long id, String title, String content, String image, Long price, Category category,
       TransactionStatus status, User seller) {
+    this.id = id;
     this.title = title;
     this.content = content;
     this.image = image;

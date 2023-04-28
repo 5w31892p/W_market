@@ -47,7 +47,8 @@ public class User {
    * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
    */
   @Builder
-  public User(String username, String password, String nickname, UserRoleEnum role) {
+  public User(Long id, String username, String password, String nickname, UserRoleEnum role) {
+    this.id = id;
     this.username = username;
     this.password = password;
     this.nickname = nickname;
