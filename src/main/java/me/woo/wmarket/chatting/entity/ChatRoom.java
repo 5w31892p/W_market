@@ -37,7 +37,8 @@ public class ChatRoom {
    */
 
   @Builder
-  public ChatRoom(Long seller, Product product, User buyer) {
+  public ChatRoom(Long id, Long seller, Product product, User buyer) {
+    this.id = id;
     this.seller = seller;
     this.buyer = buyer;
     this.product = product;
