@@ -87,8 +87,8 @@ public class ProductServiceImpl implements ProductService{
     TransactionStatus status = updateRequest.getStatus();
 
     product.updateStatus(status);
-    Product updatedProduct = this.productRepository.save(product);
-    return new ProductResponse(updatedProduct);
+    this.productRepository.save(product);
+    return new ProductResponse(product);
   }
 
   @Override
@@ -100,6 +100,6 @@ public class ProductServiceImpl implements ProductService{
     if (!product.checkSeller(userId)) {
       throw new IllegalArgumentException("권한이 없습니다.");
     }
-    userRepository.deleteById(productId);
+    productRepository.deleteById(productId);
   }
 }
