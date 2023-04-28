@@ -1,7 +1,9 @@
 package me.woo.wmarket.chatting.dto;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import me.woo.wmarket.chatting.entity.ChatRoom;
@@ -10,6 +12,7 @@ import me.woo.wmarket.user.entity.User;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class RoomListDetailResponse {
 
   private Long userId;
@@ -30,11 +33,11 @@ public class RoomListDetailResponse {
     else {
       for (ChatRoom chatRoom : user.getChatRooms()) {
         roomList.add(new RoomListResponse(chatRoom, user));
-        if (chatRoom.getProduct().getSeller().getId() == user.getId()) {
+        if (Objects.equals(chatRoom.getProduct().getSeller().getId(), user.getId())) {
           roomList.add(new RoomListResponse(chatRoom, chatRoom.getBuyer()));
         }
       }
     }
+    this.roomList = roomList;
   }
-
 }

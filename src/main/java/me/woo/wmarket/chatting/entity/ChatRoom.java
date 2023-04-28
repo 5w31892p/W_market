@@ -37,7 +37,8 @@ public class ChatRoom {
    */
 
   @Builder
-  public ChatRoom(Long seller, Product product, User buyer) {
+  public ChatRoom(Long id, Long seller, Product product, User buyer) {
+    this.id = id;
     this.seller = seller;
     this.buyer = buyer;
     this.product = product;
@@ -65,5 +66,7 @@ public class ChatRoom {
   /**
    * 서비스 메소드 - 외부에서 엔티티를 수정할 메소드를 정의합니다. (단일 책임을 가지도록 주의합니다.)
    */
-
+  public boolean checkChatroomUser(Long userId) {
+    return this.buyer.getId().equals(userId);
+  }
 }
