@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import me.woo.wmarket.chatting.dto.RoomListDetailResponse;
 import me.woo.wmarket.chatting.dto.RoomResponse;
 import me.woo.wmarket.chatting.entity.ChatRoom;
-import me.woo.wmarket.chatting.repository.ChatMessageRepository;
 import me.woo.wmarket.chatting.repository.ChatRoomRepository;
 import me.woo.wmarket.product.entity.Product;
 import me.woo.wmarket.product.repository.ProductRepository;
@@ -20,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class ChatRoomServiceImpl implements ChatRoomService{
 
   private final ChatRoomRepository chatRoomRepository;
-  private final ChatMessageRepository messageRepository;
   private final UserRepository userRepository;
   private final ProductRepository productRepository;
 
