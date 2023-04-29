@@ -18,7 +18,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @EnableKafka
 public class KafkaProducerConfig {
 
-  @Value("${spring.kafka.bootstrap-servers}")
+  @Value("${spring.kafka.producer.bootstrap-servers}")
   private String bootstrapServers;
 
   @Value("${spring.kafka.consumer.group-id}")
