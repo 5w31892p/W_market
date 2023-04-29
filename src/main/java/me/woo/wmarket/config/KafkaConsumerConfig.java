@@ -20,9 +20,6 @@ public class KafkaConsumerConfig {
   @Value("${spring.kafka.consumer.bootstrap-servers}")
   private String server;
 
-  @Value("${spring.kafka.consumer.group-id}")
-  private String groupId;
-
   @Value("${spring.kafka.consumer.auto-offset-reset}")
   private String offSet;
 

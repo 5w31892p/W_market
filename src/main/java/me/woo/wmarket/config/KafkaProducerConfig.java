@@ -14,15 +14,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-@Configuration
 @EnableKafka
+@Configuration
 public class KafkaProducerConfig {
 
   @Value("${spring.kafka.producer.bootstrap-servers}")
   private String server;
 
-  @Value("${spring.kafka.consumer.group-id}")
-  private String groupId;
 
   @Bean
   public ProducerFactory<String, MessageDetails> producerFactory() {
@@ -35,7 +33,6 @@ public class KafkaProducerConfig {
         .put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, server)
         .put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class)
         .put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class)
-        .put("group.id", groupId)
         .build();
   }
 
