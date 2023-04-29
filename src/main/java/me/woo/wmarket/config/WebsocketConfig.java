@@ -16,15 +16,15 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/chat")
+    registry.addEndpoint("/ws")
         .setAllowedOrigins("*")
+//        .withSockJS()
         ;
   }
 
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
-    registry.setApplicationDestinationPrefixes("/send")
-        .enableStompBrokerRelay("/receive")
-        ;
+    registry.setApplicationDestinationPrefixes("/send"); // 보, pub
+    registry.enableSimpleBroker("/topic"); // 받, sub
   }
 }

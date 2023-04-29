@@ -1,5 +1,6 @@
 package me.woo.wmarket.chatting.service;
 
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import me.woo.wmarket.chatting.dto.MessageDetails;
 import me.woo.wmarket.chatting.entity.ChatMessage;
@@ -22,10 +23,12 @@ public class ChatMessageServiceImpl implements ChatMessageService{
         () -> new IllegalArgumentException("채팅방이 존재하지 않습니다.")
     );
     ChatMessage chat = ChatMessage.builder()
+        .productId(room.getProduct().getId())
         .sender(message.getSender())
         .receiver(message.getReceiver())
         .message(message.getMessage())
         .chatRoom(room)
+        .sendTime(LocalDateTime.now())
         .build();
 
     chatMessageRepository.save(chat);

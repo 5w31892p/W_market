@@ -35,6 +35,8 @@ public class SecurityConfig {
     http.authorizeHttpRequests().requestMatchers("/users/**").permitAll()
         .requestMatchers("/products/**").permitAll()
         .requestMatchers("/chatroom/**").permitAll()
+        .requestMatchers("/ws/**").permitAll()
+        .requestMatchers("/ws/topic/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilterBefore(new JwtAuthFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
