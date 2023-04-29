@@ -7,6 +7,7 @@ import me.woo.wmarket.chatting.entity.ChatRoom;
 import me.woo.wmarket.chatting.repository.ChatMessageRepository;
 import me.woo.wmarket.chatting.repository.ChatRoomRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class ChatMessageServiceImpl implements ChatMessageService{
 
 
   @Override
+  @Transactional
   public MessageDetails startChat(Long roomId, MessageDetails message) {
     ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(
         () -> new IllegalArgumentException("채팅방이 존재하지 않습니다.")

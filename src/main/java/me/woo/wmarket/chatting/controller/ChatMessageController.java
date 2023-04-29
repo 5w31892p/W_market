@@ -2,7 +2,7 @@ package me.woo.wmarket.chatting.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.woo.wmarket.chatting.dto.MessageDetails;
-import me.woo.wmarket.chatting.kafka.KafkaProducerService;
+import me.woo.wmarket.chatting.service.KafkaProducerService;
 import me.woo.wmarket.chatting.service.ChatMessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
