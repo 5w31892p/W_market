@@ -4,6 +4,6 @@ import me.woo.wmarket.chatting.dto.MessageDetails;
 
 public interface ChatMessageService {
 
-  MessageDetails startChat(MessageDetails mesaage);
+  MessageDetails startChat(Long roomId, MessageDetails message);
 
 }

@@ -18,13 +18,13 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry.addEndpoint("/ws")
         .setAllowedOrigins("*")
-        .withSockJS()
+//        .withSockJS()
         ;
   }
 
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
-    registry.setApplicationDestinationPrefixes("/send"); // 보,
-    registry.enableSimpleBroker("/topic"); // 받, topic
+    registry.setApplicationDestinationPrefixes("/send"); // 보, pub
+    registry.enableSimpleBroker("/topic"); // 받, sub
   }
 }

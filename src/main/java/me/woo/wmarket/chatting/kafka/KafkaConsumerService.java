@@ -15,6 +15,6 @@ public class KafkaConsumerService {
 
   @KafkaListener(topics = "topic", groupId = "chat-group")
   public void consume(MessageDetails message) {
-    template.convertAndSend("/sub/" + message.getRoomId(), message);
+    template.convertAndSend("/send/" + message.getRoomId(), message);
   }
 }
