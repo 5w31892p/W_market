@@ -14,7 +14,7 @@ public class KafkaProducerService {
   private static final String TOPIC = "topic";
 
   public void send(MessageDetails messageDetails) {
-    log.info("send Message : " + messageDetails.getMessage());
+    log.info("send : " + messageDetails.getMessage());
     kafkaTemplate.send(TOPIC, messageDetails);
   }
 }
