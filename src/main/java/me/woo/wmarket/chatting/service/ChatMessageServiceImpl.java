@@ -17,8 +17,8 @@ public class ChatMessageServiceImpl implements ChatMessageService{
 
 
   @Override
-  public MessageDetails startChat(Long roomId, MessageDetails message) {
-    ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(
+  public MessageDetails startChat(MessageDetails message) {
+    ChatRoom room = chatRoomRepository.findById(message.getRoomId()).orElseThrow(
         () -> new IllegalArgumentException("채팅방이 존재하지 않습니다.")
     );
     ChatMessage chat = ChatMessage.builder()

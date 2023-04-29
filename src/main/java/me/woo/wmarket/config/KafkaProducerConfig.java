@@ -19,7 +19,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 public class KafkaProducerConfig {
 
   @Value("${spring.kafka.producer.bootstrap-servers}")
-  private String bootstrapServers;
+  private String server;
 
   @Value("${spring.kafka.consumer.group-id}")
   private String groupId;
@@ -32,7 +32,7 @@ public class KafkaProducerConfig {
   @Bean
   public Map<String, Object> kafkaProducerConfiguration() {
     return ImmutableMap.<String, Object>builder()
-        .put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
+        .put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, server)
         .put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class)
         .put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class)
         .put("group.id", groupId)
@@ -43,5 +43,4 @@ public class KafkaProducerConfig {
   public KafkaTemplate<String, MessageDetails> kafkaTemplate() {
     return new KafkaTemplate<>(producerFactory());
   }
-
 }

@@ -18,7 +18,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 public class KafkaConsumerConfig {
 
   @Value("${spring.kafka.consumer.bootstrap-servers}")
-  private String bootstrapServers;
+  private String server;
 
   @Value("${spring.kafka.consumer.group-id}")
   private String groupId;
@@ -32,20 +32,16 @@ public class KafkaConsumerConfig {
     factory.setConsumerFactory(consumerFactory());
     return factory;
   }
-
   @Bean
   public ConsumerFactory<String, MessageDetails> consumerFactory() {
     JsonDeserializer<MessageDetails> deserializer = new JsonDeserializer<>(MessageDetails.class);
-    deserializer.setRemoveTypeHeaders(false);
-    deserializer.addTrustedPackages("*");
-    deserializer.setUseTypeMapperForKey(true);
 
     ImmutableMap<String, Object> config = ImmutableMap.<String, Object>builder()
-        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
+        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, server)
         .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class)
         .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer)
         .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, offSet)
-        .put("group.id", groupId)
+        .put(ConsumerConfig.GROUP_ID_CONFIG, "chat-group")
         .build();
 
     return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), deserializer);
